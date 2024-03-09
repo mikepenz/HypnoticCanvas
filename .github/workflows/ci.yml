@@ -65,8 +65,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          ./gradlew hypnoticcanvas:publishAllPublicationsToMavenCentralRepository --no-daemon --no-configure-on-demand --no-parallel
-          ./gradlew hypnoticcanvas-shaders:publishAllPublicationsToMavenCentralRepository -x test -x lint --no-configure-on-demand --no-parallel
+          ./gradlew hypnoticcanvas:publishToMavenLocal --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
+          ./gradlew hypnoticcanvas-shaders:publishToMavenLocal -x test -x lint --no-configure-on-demand --no-parallel --no-configuration-cache
 
       - name: Publish the windows artifact
         if: matrix.os == 'windows-latest'
@@ -77,8 +77,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          ./gradlew hypnoticcanvas:publishMingwX64PublicationToMavenCentralRepository --no-daemon --no-configure-on-demand --no-parallel
-          ./gradlew hypnoticcanvas-shaders:publishMingwX64PublicationToMavenCentralRepository -x test -x lint --no-configure-on-demand --no-parallel
+          ./gradlew hypnoticcanvas:publishMingwX64PublicationToMavenCentralRepository --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
+          ./gradlew hypnoticcanvas-shaders:publishMingwX64PublicationToMavenCentralRepository -x test -x lint --no-configure-on-demand --no-parallel --no-configuration-cache
 
       - name: Publish the linux artifact
         if: matrix.os == 'ubuntu-latest'
@@ -89,8 +89,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          ./gradlew hypnoticcanvas:publishLinuxX64PublicationToMavenCentralRepository --no-daemon --no-configure-on-demand --no-parallel
-          ./gradlew hypnoticcanvas-shaders:publishLinuxX64PublicationToMavenCentralRepository -x test -x lint --no-configure-on-demand --no-parallel
+          ./gradlew hypnoticcanvas:publishLinuxX64PublicationToMavenCentralRepository --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
+          ./gradlew hypnoticcanvas-shaders:publishLinuxX64PublicationToMavenCentralRepository -x test -x lint --no-configure-on-demand --no-parallel --no-configuration-cache
 
   build:
     name: Build
