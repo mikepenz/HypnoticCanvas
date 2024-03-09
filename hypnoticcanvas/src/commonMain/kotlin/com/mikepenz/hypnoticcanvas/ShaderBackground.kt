@@ -11,13 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
-import com.mikepenz.hypnoticcanvas.shaders.GlossyGradients
 import com.mikepenz.hypnoticcanvas.shaders.Shader
 import com.mikepenz.hypnoticcanvas.utils.round
 
-
 @Composable
-fun Modifier.shaderBackground(shader: Shader = GlossyGradients, speed: Float = 1f): Modifier {
+fun Modifier.shaderBackground(shader: Shader, speed: Float = 1f): Modifier {
     var size: Size by remember { mutableStateOf(Size(-1f, -1f)) }
     var startMillis = remember(shader) { -1L }
     val speedModifier = shader.speedModifier
