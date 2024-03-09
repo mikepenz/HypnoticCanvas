@@ -1,6 +1,5 @@
 package com.mikepenz.hypnoticcanvas.shaders
 
-// https://www.shadertoy.com/view/lX2GDR
 object GlossyGradients : Shader {
     override val name: String
         get() = "GlossyGradients"

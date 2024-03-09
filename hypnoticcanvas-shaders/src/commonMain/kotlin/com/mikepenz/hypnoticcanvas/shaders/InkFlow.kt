@@ -1,6 +1,5 @@
 package com.mikepenz.hypnoticcanvas.shaders
 
-// https://www.shadertoy.com/view/WdjBWD
 object InkFlow : Shader {
     override val name: String
         get() = "InkFlow"

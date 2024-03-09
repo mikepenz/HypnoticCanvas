@@ -1,6 +1,5 @@
 package com.mikepenz.hypnoticcanvas.shaders
 
-// https://www.shadertoy.com/view/Wd2fDW
 object OilFlow : Shader {
     override val name: String
         get() = "OilFlow"

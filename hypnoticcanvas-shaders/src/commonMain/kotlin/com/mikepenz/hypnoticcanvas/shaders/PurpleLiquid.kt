@@ -1,6 +1,5 @@
 package com.mikepenz.hypnoticcanvas.shaders
 
-// https://www.shadertoy.com/view/dsXyzf
 object PurpleLiquid : Shader {
     override val name: String
         get() = "PurpleLiquid"

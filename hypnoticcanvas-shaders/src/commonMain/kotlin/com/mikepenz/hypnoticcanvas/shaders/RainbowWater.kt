@@ -1,6 +1,5 @@
 package com.mikepenz.hypnoticcanvas.shaders
 
-// https://www.shadertoy.com/view/dtySRR
 object RainbowWater : Shader {
     override val name: String
         get() = "RainbowWater"
