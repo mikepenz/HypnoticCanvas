@@ -1,2 +1,51 @@
-# HypnoticCanvas
-A shader modifier for Compose Multiplatform / Jetpack Compose
+[![Maven Central](https://img.shields.io/maven-central/v/com.mikepenz.hypnoticcanvas/hypnoticcanvas)](https://search.maven.org/search?q=g:com.mikepenz.hypnoticcanvas)
+
+## HypnoticCanvas
+
+This README is under construction.
+
+### Run Desktop App
+
+```bash
+./gradlew sample:run
+```
+
+### Run Web App
+
+```bash
+./gradlew sample:wasmJsRun
+```
+
+### Update aboutLibraries.json
+
+```bash
+ ./gradlew sample:exportLibraryDefinitions -PaboutLibraries.exportPath=src/commonMain/composeResources/files/
+ ```
+
+## Credit
+
+The base project setup is strongly based on the [haze](https://github.com/chrisbanes/haze) project
+by [Chris Banes](https://github.com/chrisbanes/).
+Licensed under [Apache License 2.0](https://github.com/chrisbanes/haze/blob/main/LICENSE)
+
+The individual shaders are based on their respective shaders
+from [ShaderToy.com](https://www.shadertoy.com/) and are
+licensed [CC BY-NC-SA 3.0 DEED](https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en).
+
+## License
+
+```
+Copyright 2024 Mike Penz
+ 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
