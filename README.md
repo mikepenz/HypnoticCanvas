@@ -7,7 +7,7 @@ This README is under construction.
 HypnoticCanvas is a library to provide a convenient `Modifier` to use mesmerising shaders as
 background in your Compose based UI.
 
-![Preview](https://github.com/mikepenz/HypnoticCanvas/raw/dev/.github/preview/preview.mp4)
+<img width="430" src="https://github.com/mikepenz/HypnoticCanvas/raw/dev/.github/preview/preview_small.mp4" />
 
 ## Setup
 
@@ -18,6 +18,9 @@ implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas:${version}"
 ```
 
 ### Shader-module
+
+> [!IMPORTANT]  
+> Ensure to read the [LICENSE](https://github.com/mikepenz/HypnoticCanvas?tab=readme-ov-file#shaders-module-license) section for this module.
 
 ```gradle
 implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas-shaders:${version}"
