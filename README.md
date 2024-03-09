@@ -7,6 +7,8 @@ This README is under construction.
 HypnoticCanvas is a library to provide a convenient `Modifier` to use mesmerising shaders as
 background in your Compose based UI.
 
+![Preview](https://raw.githubusercontent.com/mikepenz/HypnoticCanvas/develop/.github/preview/preview.mp4)
+
 ## Setup
 
 ### Core-module
@@ -20,6 +22,26 @@ implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas:${version}"
 ```gradle
 implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas-shaders:${version}"
 ```
+
+## Usage
+
+```kotlin
+Box(
+    modifier = Modifier.fillMaxSize()
+        .shaderBackground(BlackCherryCosmos)
+)
+```
+
+## Compatiblity
+
+HypnoticCanvas is built with [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/), meaning that it supports different platforms:
+
+| Platform      | Supported        |
+|---------------|------------------|
+| Android       | ✅               |
+| Desktop (JVM) | ✅               |
+| iOS           | ✅               |
+| Wasm          | ✅               |
 
 ## Build & Run Sample App
 
@@ -52,6 +74,15 @@ from [ShaderToy.com](https://www.shadertoy.com/) and are
 licensed [CC BY-NC-SA 3.0 DEED](https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en).
 
 ## License
+
+The core project code in this repository is licensed as under Apache
+2.0. `SPDX-License-Identifier: Apache-2.0`.
+
+All Shaders are provided under their respective Authors license.
+
+Shaders in the `hypnoticcanvas` module are licensed either as `MIT, or Apache 2.0`.
+Shaders in the `hypnoticcanvas-shaders` module are licensed
+as `SPDX-License-Identifier: CC-BY-NC-SA-3.0`.
 
 ### Core library License
 

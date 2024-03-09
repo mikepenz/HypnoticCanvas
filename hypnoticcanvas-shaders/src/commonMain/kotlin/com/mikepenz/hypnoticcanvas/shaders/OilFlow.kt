@@ -1,12 +1,23 @@
 package com.mikepenz.hypnoticcanvas.shaders
 
-// https://www.shadertoy.com/view/Wd2fDW
 object OilFlow : Shader {
     override val name: String
         get() = "OilFlow"
 
+    override val authorName: String
+        get() = "TAKUSAKU"
+
+    override val authorUrl: String
+        get() = "https://www.shadertoy.com/user/TAKUSAKU"
+
     override val credit: String
         get() = "https://www.shadertoy.com/view/Wd2fDW"
+
+    override val license: String
+        get() = "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License"
+
+    override val licenseUrl: String
+        get() = "https://www.shadertoy.com/terms"
 
     override val sksl = """
 uniform float uTime;
