@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-14]
+        os: [ macos-14 ]
 
     runs-on: ${{matrix.os}}
 
@@ -53,8 +53,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          ./gradlew hypnoticcanvas:publishToMavenLocal --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
-          ./gradlew hypnoticcanvas-shaders:publishToMavenLocal -x test -x lint --no-configure-on-demand --no-parallel --no-configuration-cache
+          ./gradlew hypnoticcanvas:publishAllPublicationsToMavenCentralRepository -x test -x lint --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
+          ./gradlew hypnoticcanvas-shaders:publishAllPublicationsToMavenCentralRepository -x test -x lint --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
 
       - name: Publish the windows artifact
         if: matrix.os == 'windows-latest'

@@ -37,6 +37,7 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibraryDefaults
 import com.mikepenz.hypnoticcanvas.Github
 import com.mikepenz.hypnoticcanvas.shaderBackground
+import com.mikepenz.hypnoticcanvas.shaders.BlackCherryCosmos
 import com.mikepenz.hypnoticcanvas.shaders.GlossyGradients
 import com.mikepenz.hypnoticcanvas.shaders.GoldenMagma
 import com.mikepenz.hypnoticcanvas.shaders.IceReflection
@@ -58,7 +59,7 @@ fun App() {
 
     var showLicenses by remember { mutableStateOf(false) }
     val hazeState = remember { HazeState() }
-    val options = listOf(GlossyGradients, PurpleLiquid, InkFlow, OilFlow, IceReflection, Stage, GoldenMagma)
+    val options = listOf(GlossyGradients, PurpleLiquid, InkFlow, OilFlow, IceReflection, Stage, GoldenMagma, BlackCherryCosmos)
     var selectedShader: Shader by remember { mutableStateOf(options.first()) }
     val animatedToolbarColor by animateColorAsState(
         if (showLicenses) Color.Unspecified else Color.Transparent
@@ -151,21 +152,39 @@ fun App() {
                             ),
                     ) {
                         Box(Modifier.fillMaxSize()) {
-                            Column(Modifier.align(Alignment.Center)) {
+                            Column(Modifier.padding(8.dp).align(Alignment.Center)) {
                                 Text(
                                     selectedShader.name,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.titleLarge,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
                                 )
 
                                 val uriHandler = LocalUriHandler.current
                                 Text(
+                                    "by ${selectedShader.authorName}",
+                                    modifier = Modifier.clickable {
+                                        uriHandler.openUri(selectedShader.authorUrl)
+                                    },
+                                    style = MaterialTheme.typography.titleMedium,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                                Text(
                                     selectedShader.credit,
                                     modifier = Modifier.clickable {
                                         uriHandler.openUri(selectedShader.credit)
                                     },
-                                    style = MaterialTheme.typography.titleSmall,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                                Text(
+                                    "Licensed as: ${selectedShader.license}",
+                                    modifier = Modifier.clickable {
+                                        uriHandler.openUri(selectedShader.licenseUrl)
+                                    },
+                                    style = MaterialTheme.typography.bodySmall,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
                                 )

@@ -53,6 +53,15 @@ licensed [CC BY-NC-SA 3.0 DEED](https://creativecommons.org/licenses/by-nc-sa/3.
 
 ## License
 
+The core project code in this repository is licensed as under Apache
+2.0. `SPDX-License-Identifier: Apache-2.0`.
+
+All Shaders are provided under their respective Authors license.
+
+Shaders in the `hypnoticcanvas` module are licensed either as `MIT, or Apache 2.0`.
+Shaders in the `hypnoticcanvas-shaders` module are licensed
+as `SPDX-License-Identifier: CC-BY-NC-SA-3.0`.
+
 ### Core library License
 
 ```

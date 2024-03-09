@@ -4,8 +4,20 @@ object RainbowWater : Shader {
     override val name: String
         get() = "RainbowWater"
 
+    override val authorName: String
+        get() = "flylo"
+
+    override val authorUrl: String
+        get() = "https://www.shadertoy.com/user/flylo"
+
     override val credit: String
         get() = "https://www.shadertoy.com/view/dtySRR"
+
+    override val license: String
+        get() = "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License"
+
+    override val licenseUrl: String
+        get() = "https://www.shadertoy.com/terms"
 
     override val speedModifier: Float
         get() = 0.01f

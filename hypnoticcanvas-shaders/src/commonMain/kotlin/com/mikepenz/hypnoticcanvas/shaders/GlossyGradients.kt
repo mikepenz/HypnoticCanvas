@@ -4,8 +4,20 @@ object GlossyGradients : Shader {
     override val name: String
         get() = "GlossyGradients"
 
+    override val authorName: String
+        get() = "Peace"
+    
+    override val authorUrl: String
+        get() = "https://www.shadertoy.com/user/Peace"
+
     override val credit: String
         get() = "https://www.shadertoy.com/view/lX2GDR"
+
+    override val license: String
+        get() = "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License"
+
+    override val licenseUrl: String
+        get() = "https://www.shadertoy.com/terms"
 
     override val sksl = """
 uniform float uTime;
