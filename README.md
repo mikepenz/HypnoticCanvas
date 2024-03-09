@@ -7,6 +7,8 @@ This README is under construction.
 HypnoticCanvas is a library to provide a convenient `Modifier` to use mesmerising shaders as
 background in your Compose based UI.
 
+![Preview](https://raw.githubusercontent.com/mikepenz/HypnoticCanvas/develop/.github/preview/preview.mp4)
+
 ## Setup
 
 ### Core-module
@@ -20,6 +22,26 @@ implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas:${version}"
 ```gradle
 implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas-shaders:${version}"
 ```
+
+## Usage
+
+```kotlin
+Box(
+    modifier = Modifier.fillMaxSize()
+        .shaderBackground(BlackCherryCosmos)
+)
+```
+
+## Compatiblity
+
+HypnoticCanvas is built with [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/), meaning that it supports different platforms:
+
+| Platform      | Supported        |
+|---------------|------------------|
+| Android       | ✅               |
+| Desktop (JVM) | ✅               |
+| iOS           | ✅               |
+| Wasm          | ✅               |
 
 ## Build & Run Sample App
 
