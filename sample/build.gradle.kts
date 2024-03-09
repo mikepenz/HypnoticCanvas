@@ -61,18 +61,11 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation(compose.runtime) {
-                require(true)
-            }
-            implementation(compose.foundation) {
-                require(true)
-            }
-            implementation(compose.material3) {
-                require(true)
-            }
-            implementation(compose.ui) {
-                require(true)
-            }
+            implementation(compose.runtime) { require(true) }
+            implementation(compose.foundation) { require(true) }
+            implementation(compose.material3) { require(true) }
+            implementation(compose.ui) { require(true) }
+            implementation(compose.components.resources) { require(true) }
 
             implementation(projects.hypnoticcanvas)
             implementation(projects.hypnoticcanvasShaders)

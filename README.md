@@ -1,8 +1,27 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.mikepenz.hypnoticcanvas/hypnoticcanvas)](https://search.maven.org/search?q=g:com.mikepenz.hypnoticcanvas)
 
-## HypnoticCanvas
+# HypnoticCanvas
 
 This README is under construction.
+
+HypnoticCanvas is a library to provide a convenient `Modifier` to use mesmerising shaders as
+background in your Compose based UI.
+
+## Setup
+
+### Core-module
+
+```gradle
+implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas:${version}"
+```
+
+### Shader-module
+
+```gradle
+implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas-shaders:${version}"
+```
+
+## Build & Run Sample App
 
 ### Run Desktop App
 
@@ -34,6 +53,8 @@ licensed [CC BY-NC-SA 3.0 DEED](https://creativecommons.org/licenses/by-nc-sa/3.
 
 ## License
 
+### Core library License
+
 ```
 Copyright 2024 Mike Penz
  
@@ -49,3 +70,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+### Shaders module License
+
+[Attribution-NonCommercial-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-nc-sa/3.0/).
+Which is the default license as outlined by [ShaderToy.com](https://www.shadertoy.com/terms)
+
+
+
