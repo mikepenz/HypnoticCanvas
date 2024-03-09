@@ -7,7 +7,7 @@ This README is under construction.
 HypnoticCanvas is a library to provide a convenient `Modifier` to use mesmerising shaders as
 background in your Compose based UI.
 
-![Preview](https://raw.githubusercontent.com/mikepenz/HypnoticCanvas/develop/.github/preview/preview.mp4)
+![Preview](https://github.com/mikepenz/HypnoticCanvas/raw/dev/.github/preview/preview.mp4)
 
 ## Setup
 

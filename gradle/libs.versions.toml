@@ -3,13 +3,13 @@ agp = "8.3.0"
 
 androidx-benchmark = "1.2.3"
 androidx-test-ext-junit = "1.1.5"
-coil = "3.0.0-SNAPSHOT"
+coil = "3.0.0-alpha06"
 jetpackcompose-compiler = "1.5.8"
 compose-multiplatform = "1.6.0"
 kotlin = "1.9.22"
 ktor = "3.0.0-wasm2"
 aboutlib = "11.1.0"
-haze = "0.7.0-SNAPSHOT"
+haze = "0.6.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

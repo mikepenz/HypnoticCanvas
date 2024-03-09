@@ -13,7 +13,6 @@ dependencyResolutionManagement {
         mavenCentral()
         google()
         maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
-        maven("https://oss.sonatype.org/content/repositories/snapshots")
         mavenLocal()
     }
 }
