@@ -8,7 +8,7 @@ jetpackcompose-compiler = "1.5.8"
 compose-multiplatform = "1.6.0"
 kotlin = "1.9.22"
 ktor = "3.0.0-wasm2"
-aboutlib = "11.1.0-b03"
+aboutlib = "11.1.0"
 haze = "0.7.0-SNAPSHOT"
 
 [plugins]
