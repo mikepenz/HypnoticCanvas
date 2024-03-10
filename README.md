@@ -48,12 +48,12 @@ HypnoticCanvas is built
 with [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/), meaning that it
 supports different platforms:
 
-| Platform      | Supported |
-|---------------|-----------|
-| Android       | ✅         |
-| Desktop (JVM) | ✅         |
-| iOS           | ✅         |
-| Wasm          | ✅         |
+| Platform      | Supported | Link                                                 |
+|---------------|-----------|------------------------------------------------------|
+| Android       | ✅         |                                                      |
+| Desktop (JVM) | ✅         |                                                      |
+| iOS           | ✅         |                                                      |
+| Wasm          | ✅         | [Sample](https://mikepenz.github.io/HypnoticCanvas/) |
 
 ## Build & Run Sample App
 
