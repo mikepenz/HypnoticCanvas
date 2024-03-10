@@ -85,10 +85,10 @@ The individual shaders are based on the respective shaders licenses. More detail
 
 ### Shaders core-module
 
-| Name                                                                           | Author                                                          | License     | Note                                                                         |
-|--------------------------------------------------------------------------------|-----------------------------------------------------------------|-------------|------------------------------------------------------------------------------|
-| [GlossyGradients](https://www.shadertoy.com/view/lX2GDR)                       | [Giorgi Azmaipharashvili](https://www.shadertoy.com/user/Peace) | MIT License | Rights bought for this shader on Fiverr, included in this project under MIT. |
-| [BlackCherryCosmos](https://editor.isf.video/shaders/612cb473f4fe08001a0a6281) | [axiomcrux](https://editor.isf.video/u/axiomcrux)               |             |                                                                              |
+| Name                                                                                                                    | Author                                                          | License     | Note                                                                         |
+|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|-------------|------------------------------------------------------------------------------|
+| [GlossyGradients](https://www.shadertoy.com/view/lX2GDR)                                                                | [Giorgi Azmaipharashvili](https://www.shadertoy.com/user/Peace) | MIT License | Rights bought for this shader on Fiverr, included in this project under MIT. |
+| [BlackCherryCosmos](https://editor.isf.video/shaders/612cb473f4fe08001a0a6281) [via](https://glslsandbox.com/e#28545.0) | [axiomcrux](https://editor.isf.video/u/axiomcrux)               | MIT License | Shader does not specifically include license, isf.video states MIT license.  |
 
 ### Shaders shaders-module
 
