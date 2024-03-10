@@ -8,7 +8,7 @@ object BlackCherryCosmos : Shader {
         get() = "axiomcrux"
 
     override val authorUrl: String
-        get() = "axiomcrux"
+        get() = "https://editor.isf.video/u/axiomcrux"
 
     override val credit: String
         get() = "https://editor.isf.video/shaders/612cb473f4fe08001a0a6281"

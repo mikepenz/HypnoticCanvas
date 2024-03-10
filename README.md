@@ -17,34 +17,42 @@ https://github.com/mikepenz/HypnoticCanvas/assets/1476232/ee120f1c-d18a-43c4-a7b
 implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas:${version}"
 ```
 
-### Shader-module
+> [!NOTE]  
+> All shaders provided in the `core` module are licensed either under `MIT` or `Apache 2.0` license.
 
-> [!IMPORTANT]  
-> Ensure to read the [LICENSE](https://github.com/mikepenz/HypnoticCanvas?tab=readme-ov-file#shaders-module-license) section for this module.
+### Shader-module
 
 ```gradle
 implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas-shaders:${version}"
 ```
 
+> [!IMPORTANT]  
+> Shaders in this module have non permissive licenses. Ensure to read the
+> [LICENSE](https://github.com/mikepenz/HypnoticCanvas?tab=readme-ov-file#shaders-module-license)
+> section of the README.
+
 ## Usage
 
 ```kotlin
 Box(
-    modifier = Modifier.fillMaxSize()
+    modifier = Modifier
+        .fillMaxSize()
         .shaderBackground(BlackCherryCosmos)
 )
 ```
 
 ## Compatiblity
 
-HypnoticCanvas is built with [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/), meaning that it supports different platforms:
+HypnoticCanvas is built
+with [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/), meaning that it
+supports different platforms:
 
-| Platform      | Supported        |
-|---------------|------------------|
-| Android       | ✅               |
-| Desktop (JVM) | ✅               |
-| iOS           | ✅               |
-| Wasm          | ✅               |
+| Platform      | Supported |
+|---------------|-----------|
+| Android       | ✅         |
+| Desktop (JVM) | ✅         |
+| iOS           | ✅         |
+| Wasm          | ✅         |
 
 ## Build & Run Sample App
 
@@ -69,12 +77,29 @@ HypnoticCanvas is built with [Compose Multiplatform](https://www.jetbrains.com/l
 ## Credit
 
 The base project setup is strongly based on the [haze](https://github.com/chrisbanes/haze) project
-by [Chris Banes](https://github.com/chrisbanes/).
+by [Chris Banes](https://github.com/chrisbanes/),
 Licensed under [Apache License 2.0](https://github.com/chrisbanes/haze/blob/main/LICENSE)
 
-The individual shaders are based on their respective shaders
-from [ShaderToy.com](https://www.shadertoy.com/) and are
-licensed [CC BY-NC-SA 3.0 DEED](https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en).
+The individual shaders are based on the respective shaders licenses. More details below.
+
+### Shaders core-module
+
+| Name                                                                           | Author                                                          | License     | Note                                                                         |
+|--------------------------------------------------------------------------------|-----------------------------------------------------------------|-------------|------------------------------------------------------------------------------|
+| [GlossyGradients](https://www.shadertoy.com/view/lX2GDR)                       | [Giorgi Azmaipharashvili](https://www.shadertoy.com/user/Peace) | MIT License | Rights bought for this shader on Fiverr, included in this project under MIT. |
+| [BlackCherryCosmos](https://editor.isf.video/shaders/612cb473f4fe08001a0a6281) | [axiomcrux](https://editor.isf.video/u/axiomcrux)               |             |                                                                              |
+
+### Shaders shaders-module
+
+| Name                                                   | Author                                              | License              | Note |
+|--------------------------------------------------------|-----------------------------------------------------|----------------------|------|
+| [GoldenMagma](https://www.shadertoy.com/view/tdBBRV)   | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
+| [IceReflection](https://www.shadertoy.com/view/3djfzy) | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
+| [InkFlow](https://www.shadertoy.com/view/WdjBWD)       | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
+| [OilFlow](https://www.shadertoy.com/view/Wd2fDW)       | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
+| [PurpleLiquid](https://www.shadertoy.com/view/dsXyzf)  | [fouad](https://www.shadertoy.com/user/fouad)       | CC BY-NC-SA 3.0 DEED |      |
+| [RainbowWater](https://www.shadertoy.com/view/dtySRR)  | [flylo](https://www.shadertoy.com/user/flylo)       | CC BY-NC-SA 3.0 DEED |      |
+| [Stage](https://www.shadertoy.com/view/wtfcDj)         | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
 
 ## License
 
@@ -87,7 +112,10 @@ Shaders in the `hypnoticcanvas` module are licensed either as `MIT, or Apache 2.
 Shaders in the `hypnoticcanvas-shaders` module are licensed
 as `SPDX-License-Identifier: CC-BY-NC-SA-3.0`.
 
-### Core library License
+### Core module License
+
+The source code for the core module is licensed under Apache 2.0, with the shaders provided in the
+core module as MIT License.
 
 ```
 Copyright 2024 Mike Penz
@@ -107,8 +135,6 @@ limitations under the License.
 
 ### Shaders module License
 
-[Attribution-NonCommercial-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-nc-sa/3.0/).
+Shaders in this module are most from [ShaderToy.com](https://www.shadertoy.com/) and are
+licensed [Attribution-NonCommercial-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-nc-sa/3.0/).
 Which is the default license as outlined by [ShaderToy.com](https://www.shadertoy.com/terms)
-
-
-
