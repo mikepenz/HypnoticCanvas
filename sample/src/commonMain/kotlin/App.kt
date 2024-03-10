@@ -56,7 +56,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun App() {
-
+    val uriHandler = LocalUriHandler.current
     var showLicenses by remember { mutableStateOf(false) }
     val hazeState = remember { HazeState() }
     val options = listOf(GlossyGradients, PurpleLiquid, InkFlow, OilFlow, IceReflection, Stage, GoldenMagma, BlackCherryCosmos)
@@ -83,8 +83,16 @@ fun App() {
                             showLicenses = !showLicenses
                         }) {
                             Icon(
-                                imageVector = Github,
+                                imageVector = OpenSourceInitiative,
                                 contentDescription = "Open Source"
+                            )
+                        }
+                        IconButton(onClick = {
+                            uriHandler.openUri("https://github.com/mikepenz/HypnoticCanvas")
+                        }) {
+                            Icon(
+                                imageVector = Github,
+                                contentDescription = "GitHub"
                             )
                         }
                     })
@@ -160,7 +168,6 @@ fun App() {
                                     overflow = TextOverflow.Ellipsis
                                 )
 
-                                val uriHandler = LocalUriHandler.current
                                 Text(
                                     "by ${selectedShader.authorName}",
                                     modifier = Modifier.clickable {

@@ -1,12 +1,23 @@
 package com.mikepenz.hypnoticcanvas
 
-import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.Brush
 import com.mikepenz.hypnoticcanvas.shaders.Shader
 
 /**
  * Describes a platform independent runtime effect
  */
 internal interface RuntimeEffect {
+
+    /**
+     * Indicates if the current platform is supported
+     */
+    val supported: Boolean
+
+    /**
+     * Defines if the effect is ready to be displayed
+     */
+    val ready: Boolean
+
     /**
      * Updates the uniforms for the shader, on changes of the size or time.
      */
@@ -15,7 +26,7 @@ internal interface RuntimeEffect {
     /**
      * Builds an updates ShaderBrush
      */
-    fun build(): ShaderBrush
+    fun build(): Brush
 }
 
 internal expect fun buildEffect(shader: Shader): RuntimeEffect
