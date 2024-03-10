@@ -16,15 +16,17 @@ https://github.com/mikepenz/HypnoticCanvas/assets/1476232/ee120f1c-d18a-43c4-a7b
 ```gradle
 implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas:${version}"
 ```
+> [!NOTE]  
+> All shaders provided in this module are licensed either under MIT or Apache 2.0 license.
 
 ### Shader-module
-
-> [!IMPORTANT]  
-> Ensure to read the [LICENSE](https://github.com/mikepenz/HypnoticCanvas?tab=readme-ov-file#shaders-module-license) section for this module.
 
 ```gradle
 implementation "com.mikepenz.hypnoticcanvas:hypnoticcanvas-shaders:${version}"
 ```
+
+> [!IMPORTANT]  
+> Ensure to read the [LICENSE](https://github.com/mikepenz/HypnoticCanvas?tab=readme-ov-file#shaders-module-license) section for this module.
 
 ## Usage
 
