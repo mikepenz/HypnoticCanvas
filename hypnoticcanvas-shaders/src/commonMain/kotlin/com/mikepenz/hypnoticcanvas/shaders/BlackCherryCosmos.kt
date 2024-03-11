@@ -2,7 +2,7 @@ package com.mikepenz.hypnoticcanvas.shaders
 
 object BlackCherryCosmos : Shader {
     override val name: String
-        get() = "BlackCherryCosmos"
+        get() = "BlackCherryCosmos2"
 
     override val authorName: String
         get() = "axiomcrux"
@@ -14,7 +14,7 @@ object BlackCherryCosmos : Shader {
         get() = "https://editor.isf.video/shaders/612cb473f4fe08001a0a6281"
 
     override val license: String
-        get() = "MIT License"
+        get() = "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License"
 
     override val licenseUrl: String
         get() = "https://isf.video/"
