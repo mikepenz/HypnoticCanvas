@@ -58,6 +58,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 fun App() {
     val uriHandler = LocalUriHandler.current
     var showLicenses by remember { mutableStateOf(false) }
+    var useHaze by remember { mutableStateOf(true) }
     val hazeState = remember { HazeState() }
     val options = listOf(GlossyGradients, PurpleLiquid, InkFlow, OilFlow, IceReflection, Stage, GoldenMagma, BlackCherryCosmos)
     var selectedShader: Shader by remember { mutableStateOf(options.first()) }
@@ -73,15 +74,21 @@ fun App() {
                         Text("HypnoticCanvas")
                     },
                     modifier = Modifier
-                        .hazeChild(hazeState, style = HazeMaterials.thin())
+                        .let {
+                            if (useHaze) it.hazeChild(hazeState, style = HazeMaterials.thin()) else it
+                        }
                         .fillMaxWidth(),
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = animatedToolbarColor
                     ),
                     actions = {
-                        IconButton(onClick = {
-                            showLicenses = !showLicenses
-                        }) {
+                        IconButton(onClick = { useHaze = !useHaze }) {
+                            Icon(
+                                imageVector = Shimmer,
+                                contentDescription = "Toggle Haze"
+                            )
+                        }
+                        IconButton(onClick = { showLicenses = !showLicenses }) {
                             Icon(
                                 imageVector = OpenSourceInitiative,
                                 contentDescription = "Open Source"
@@ -102,7 +109,9 @@ fun App() {
                     NavigationBar(
                         containerColor = Color.Transparent,
                         modifier = Modifier
-                            .hazeChild(hazeState, style = HazeMaterials.thin())
+                            .let {
+                                if (useHaze) it.hazeChild(hazeState, style = HazeMaterials.thin()) else it
+                            }
                             .fillMaxWidth(),
                     ) {
                         options.forEachIndexed { index, shader ->
@@ -123,7 +132,9 @@ fun App() {
             }
         ) { contentPadding ->
             Box(Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.haze(hazeState).fillMaxSize().shaderBackground(selectedShader))
+                Box(modifier = Modifier.let {
+                    if (useHaze) it.haze(hazeState) else it
+                }.fillMaxSize().shaderBackground(selectedShader))
 
                 if (showLicenses) {
                     var libs by remember { mutableStateOf<Libs?>(null) }
@@ -134,11 +145,14 @@ fun App() {
                     }
                     LibrariesContainer(
                         libraries = libs,
-                        modifier = Modifier.fillMaxSize().hazeChild(
-                            state = hazeState,
-                            shape = MaterialTheme.shapes.large,
-                            style = HazeMaterials.thin(),
-                        ),
+                        modifier = Modifier.fillMaxSize()
+                            .let {
+                                if (useHaze) it.hazeChild(
+                                    state = hazeState,
+                                    shape = MaterialTheme.shapes.large,
+                                    style = HazeMaterials.thin(),
+                                ) else it
+                            },
                         colors = LibraryDefaults.libraryColors(backgroundColor = Color.Transparent),
                         contentPadding = contentPadding
                     )
@@ -153,11 +167,13 @@ fun App() {
                             .heightIn(max = 200.dp)
                             .aspectRatio(16f / 9)
                             .align(Alignment.Center)
-                            .hazeChild(
-                                state = hazeState,
-                                shape = MaterialTheme.shapes.large,
-                                style = HazeMaterials.thin(),
-                            ),
+                            .let {
+                                if (useHaze) it.hazeChild(
+                                    state = hazeState,
+                                    shape = MaterialTheme.shapes.large,
+                                    style = HazeMaterials.thin(),
+                                ) else it
+                            }
                     ) {
                         Box(Modifier.fillMaxSize()) {
                             Column(Modifier.padding(8.dp).align(Alignment.Center)) {
