@@ -85,22 +85,22 @@ The individual shaders are based on the respective shaders licenses. More detail
 
 ### Shaders core-module
 
-| Name                                                                                                                    | Author                                                          | License     | Note                                                                         |
-|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|-------------|------------------------------------------------------------------------------|
-| [GlossyGradients](https://www.shadertoy.com/view/lX2GDR)                                                                | [Giorgi Azmaipharashvili](https://www.shadertoy.com/user/Peace) | MIT License | Rights bought for this shader on Fiverr, included in this project under MIT. |
-| [BlackCherryCosmos](https://editor.isf.video/shaders/612cb473f4fe08001a0a6281) [via](https://glslsandbox.com/e#28545.0) | [axiomcrux](https://editor.isf.video/u/axiomcrux)               | MIT License | Shader does not specifically include license, isf.video states MIT license.  |
+| Name                                                     | Author                                                          | License     | Note                                                                         |
+|----------------------------------------------------------|-----------------------------------------------------------------|-------------|------------------------------------------------------------------------------|
+| [GlossyGradients](https://www.shadertoy.com/view/lX2GDR) | [Giorgi Azmaipharashvili](https://www.shadertoy.com/user/Peace) | MIT License | Rights bought for this shader on Fiverr, included in this project under MIT. |
 
 ### Shaders shaders-module
 
-| Name                                                   | Author                                              | License              | Note |
-|--------------------------------------------------------|-----------------------------------------------------|----------------------|------|
-| [GoldenMagma](https://www.shadertoy.com/view/tdBBRV)   | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
-| [IceReflection](https://www.shadertoy.com/view/3djfzy) | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
-| [InkFlow](https://www.shadertoy.com/view/WdjBWD)       | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
-| [OilFlow](https://www.shadertoy.com/view/Wd2fDW)       | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
-| [PurpleLiquid](https://www.shadertoy.com/view/dsXyzf)  | [fouad](https://www.shadertoy.com/user/fouad)       | CC BY-NC-SA 3.0 DEED |      |
-| [RainbowWater](https://www.shadertoy.com/view/dtySRR)  | [flylo](https://www.shadertoy.com/user/flylo)       | CC BY-NC-SA 3.0 DEED |      |
-| [Stage](https://www.shadertoy.com/view/wtfcDj)         | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |      |
+| Name                                                                                                                                                                                      | Author                                              | License              | Note                                                                                              |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|----------------------|---------------------------------------------------------------------------------------------------|
+| [BlackCherryCosmos2](https://editor.isf.video/shaders/612cb473f4fe08001a0a6281) [via](https://glslsandbox.com/e#28545.0) [via](https://editor.isf.video/shaders/5e7a7fcf7c113618206de4cc) | [axiomcrux](https://editor.isf.video/u/axiomcrux)   | CC BY-NC-SA 3.0 DEED | Shader does not specifically include license, however found the shader it appears to be based on. |
+| [GoldenMagma](https://www.shadertoy.com/view/tdBBRV)                                                                                                                                      | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |                                                                                                   |
+| [IceReflection](https://www.shadertoy.com/view/3djfzy)                                                                                                                                    | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |                                                                                                   |
+| [InkFlow](https://www.shadertoy.com/view/WdjBWD)                                                                                                                                          | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |                                                                                                   |
+| [OilFlow](https://www.shadertoy.com/view/Wd2fDW)                                                                                                                                          | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |                                                                                                   |
+| [PurpleLiquid](https://www.shadertoy.com/view/dsXyzf)                                                                                                                                     | [fouad](https://www.shadertoy.com/user/fouad)       | CC BY-NC-SA 3.0 DEED |                                                                                                   |
+| [RainbowWater](https://www.shadertoy.com/view/dtySRR)                                                                                                                                     | [flylo](https://www.shadertoy.com/user/flylo)       | CC BY-NC-SA 3.0 DEED |                                                                                                   |
+| [Stage](https://www.shadertoy.com/view/wtfcDj)                                                                                                                                            | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |                                                                                                   |
 
 ## License
 
