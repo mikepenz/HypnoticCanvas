@@ -35,6 +35,12 @@ internal class AndroidRuntimeEffect(shader: Shader) : RuntimeEffect {
     override fun updateUniforms(time: Float, width: Float, height: Float) {
         compositeRuntimeEffect.setFloatUniform("uResolution", width, height, width / height)
         compositeRuntimeEffect.setFloatUniform("uTime", time)
+
+        compositeRuntimeEffect.setFloatUniform("uColor", floatArrayOf(
+            0.078431375f, 0.61960787f, 0.9607843f,
+            0.43529412f, 0.8f, 0.99607843f,
+            0.8117647f, 0.8666667f, 0.96862745f)
+        )
         ready = width > 0 && height > 0
     }
 

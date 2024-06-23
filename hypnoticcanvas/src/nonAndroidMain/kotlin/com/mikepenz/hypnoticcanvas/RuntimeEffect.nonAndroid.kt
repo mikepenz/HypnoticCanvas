@@ -16,6 +16,12 @@ class NonAndroidRuntimeEffect(shader: Shader) : RuntimeEffect {
     override fun updateUniforms(time: Float, width: Float, height: Float) {
         compositeShaderBuilder.uniform("uResolution", width, height, width / height)
         compositeShaderBuilder.uniform("uTime", time)
+        compositeShaderBuilder.uniform("uColor", floatArrayOf(
+            0.078431375f, 0.61960787f, 0.9607843f,
+            0.43529412f, 0.8f, 0.99607843f,
+            0.8117647f, 0.8666667f, 0.96862745f)
+        )
+
         ready = width > 0 && height > 0
     }
 

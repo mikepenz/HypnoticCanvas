@@ -53,6 +53,7 @@ fun App() {
     var useHaze by remember { mutableStateOf(true) }
     val hazeState = remember { HazeState() }
     val options = listOf(
+        MeshGradient,
         MesmerizingLens,
         GlossyGradients,
         GradientFlow,
