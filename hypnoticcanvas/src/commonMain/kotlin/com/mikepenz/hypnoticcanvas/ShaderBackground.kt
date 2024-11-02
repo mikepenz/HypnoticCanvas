@@ -50,8 +50,9 @@ fun Modifier.shaderBackground(
     return this then Modifier.onGloballyPositioned {
         size = Size(it.size.width.toFloat(), it.size.height.toFloat())
     }.drawBehind {
-        runtimeEffect.updateUniforms((time * speed * speedModifier).round(3), size.width, size.height) // set uniforms for the shaders
+        runtimeEffect.update(shader, (time * speed * speedModifier).round(3), size.width, size.height) // set uniforms for the shaders
         if (runtimeEffect.ready) {
+
             drawRect(brush = runtimeEffect.build())
         } else {
             drawRect(brush = fallback())

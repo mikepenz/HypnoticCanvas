@@ -40,6 +40,18 @@ Box(
         .fillMaxSize()
         .shaderBackground(BlackCherryCosmos)
 )
+
+// Usage of Shader with configurations
+Box(
+    modifier = Modifier
+        .fillMaxSize()
+        .shaderBackground(
+            MeshGradient(
+                arrayOf(Color(0xFFFF15E5), Color(0xFFFAAEF7), Color(0xFF6903F9)),
+                scale = 1f
+            )
+        )
+)
 ```
 
 ## Compatiblity
@@ -87,6 +99,8 @@ The individual shaders are based on the respective shaders licenses. More detail
 
 | Name                                                     | Author                                                          | License     | Note                                                                         |
 |----------------------------------------------------------|-----------------------------------------------------------------|-------------|------------------------------------------------------------------------------|
+| MeshGradient                                             | Mike Penz                                                       | MIT License |                                                                              |
+| MesmerizingLens                                          | Mike Penz                                                       | MIT License |                                                                              |
 | [GlossyGradients](https://www.shadertoy.com/view/lX2GDR) | [Giorgi Azmaipharashvili](https://www.shadertoy.com/user/Peace) | MIT License | Rights bought for this shader on Fiverr, included in this project under MIT. |
 
 ### Shaders shaders-module
