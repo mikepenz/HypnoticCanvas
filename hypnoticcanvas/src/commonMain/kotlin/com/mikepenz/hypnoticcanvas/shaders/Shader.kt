@@ -1,5 +1,7 @@
 package com.mikepenz.hypnoticcanvas.shaders
 
+import com.mikepenz.hypnoticcanvas.RuntimeEffect
+
 /**
  * Interface to describe shaders supported by the [shaderBackground] Modifier.
  */
@@ -28,4 +30,10 @@ interface Shader {
 
     /** Contains the sksl shader*/
     val sksl: String
+
+    /** Applies the uniforms required for this shader to the effect */
+    fun applyUniforms(runtimeEffect: RuntimeEffect, time: Float, width: Float, height: Float) {
+        runtimeEffect.setFloatUniform("uResolution", width, height, width / height)
+        runtimeEffect.setFloatUniform("uTime", time)
+    }
 }

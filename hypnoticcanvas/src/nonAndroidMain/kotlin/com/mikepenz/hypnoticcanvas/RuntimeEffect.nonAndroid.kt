@@ -13,15 +13,24 @@ class NonAndroidRuntimeEffect(shader: Shader) : RuntimeEffect {
     override val supported: Boolean = true
     override var ready: Boolean = false
 
-    override fun updateUniforms(time: Float, width: Float, height: Float) {
-        compositeShaderBuilder.uniform("uResolution", width, height, width / height)
-        compositeShaderBuilder.uniform("uTime", time)
-        compositeShaderBuilder.uniform("uColor", floatArrayOf(
-            0.078431375f, 0.61960787f, 0.9607843f,
-            0.43529412f, 0.8f, 0.99607843f,
-            0.8117647f, 0.8666667f, 0.96862745f)
-        )
+    override fun setFloatUniform(name: String, value1: Float) {
+        compositeShaderBuilder.uniform(name, value1)
+    }
 
+    override fun setFloatUniform(name: String, value1: Float, value2: Float) {
+        compositeShaderBuilder.uniform(name, value1, value2)
+    }
+
+    override fun setFloatUniform(name: String, value1: Float, value2: Float, value3: Float) {
+        compositeShaderBuilder.uniform(name, value1, value2, value3)
+    }
+
+    override fun setFloatUniform(name: String, values: FloatArray) {
+        compositeShaderBuilder.uniform(name, values)
+    }
+
+    override fun update(shader: Shader, time: Float, width: Float, height: Float) {
+        shader.applyUniforms(this, time, width, height)
         ready = width > 0 && height > 0
     }
 

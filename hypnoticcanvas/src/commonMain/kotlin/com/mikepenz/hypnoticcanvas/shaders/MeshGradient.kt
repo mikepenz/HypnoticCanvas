@@ -2,7 +2,22 @@
 // SPDX-License-Identifier: MIT
 package com.mikepenz.hypnoticcanvas.shaders
 
-object MeshGradient : Shader {
+import androidx.compose.ui.graphics.Color
+import com.mikepenz.hypnoticcanvas.RuntimeEffect
+
+class MeshGradient(
+    /** The colors to display */
+    colors: Array<Color>,
+    /** Adjust the speed of the movement */
+    speed: Float = 0.005f,
+    /** Adjusts the scale of the board. Higher number -> larger billboard -> smaller color blobs */
+    scale: Float = 2f,
+) : Shader {
+    private val colorCount = colors.size
+    private val colorUniforms = colors.flatMap {
+        listOf(it.red, it.green, it.blue)
+    }.toTypedArray().toFloatArray()
+
     override val name: String
         get() = "MeshGradient"
 
@@ -10,7 +25,7 @@ object MeshGradient : Shader {
         get() = "Mike Penz"
 
     override val authorUrl: String
-        get() = ""
+        get() = "https://github.com/mikepenz/"
 
     override val credit: String
         get() = ""
@@ -21,15 +36,12 @@ object MeshGradient : Shader {
     override val licenseUrl: String
         get() = "https://opensource.org/license/mit"
 
-    override val speedModifier: Float
-        get() = 0.005f
-
     override val sksl = """
 uniform float uTime;
 uniform vec3 uResolution;
 
 vec3 vColor;
-const int MAX_COLORS = 3;
+const int MAX_COLORS = ${colorCount};
 uniform vec3 uColor[MAX_COLORS];
 
 //	Simplex 3D Noise 
@@ -47,27 +59,27 @@ float snoise(vec3 v) {
     const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
     const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
 
-// First corner
+    // First corner
     vec3 i = floor(v + dot(v, C.yyy));
     vec3 x0 = v - i + dot(i, C.xxx);
 
-// Other corners
+    // Other corners
     vec3 g = step(x0.yzx, x0.xyz);
     vec3 l = 1.0 - g;
     vec3 i1 = min(g.xyz, l.zxy);
     vec3 i2 = max(g.xyz, l.zxy);
 
-  //  x0 = x0 - 0. + 0.0 * C 
+    //  x0 = x0 - 0. + 0.0 * C 
     vec3 x1 = x0 - i1 + 1.0 * C.xxx;
     vec3 x2 = x0 - i2 + 2.0 * C.xxx;
     vec3 x3 = x0 - 1. + 3.0 * C.xxx;
 
-// Permutations
+    // Permutations
     i = mod(i, 289.0);
     vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
 
-// Gradients
-// ( N*N points uniformly over a square, mapped onto an octahedron.)
+    // Gradients
+    // ( N*N points uniformly over a square, mapped onto an octahedron.)
     float n_ = 1.0 / 7.0; // N=7
     vec3 ns = n_ * D.wyz - D.xzx;
 
@@ -95,24 +107,25 @@ float snoise(vec3 v) {
     vec3 p2 = vec3(a1.xy, h.z);
     vec3 p3 = vec3(a1.zw, h.w);
 
-//Normalise gradients
+    //Normalise gradients
     vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
     p0 *= norm.x;
     p1 *= norm.y;
     p2 *= norm.z;
     p3 *= norm.w;
 
-// Mix final noise value
+    // Mix final noise value
     vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
     m = m * m;
     return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
 }
 
 // Author       : Johnny Leek
+// https://github.com/JohnnyLeek1/React-Mesh-Gradient
 // Inspiration  : Yuri Artiukh
 vec4 main( vec2 fragCoord ) {
     float mr = min(uResolution.x, uResolution.y);
-    vec2 uv = (fragCoord * 2.0 - uResolution.xy) / mr;
+    vec2 uv = (fragCoord * $scale - uResolution.xy) / mr;
 
     // Calculate base coordinate position
     vec2 base = uv / 2;
@@ -125,7 +138,7 @@ vec4 main( vec2 fragCoord ) {
     float offset = incline * mix(-.25, 0.25, uv.y);
 
     // Calculate noise based on base position
-    float noise = snoise(vec3(base.x + uTime * 1., base.y, uTime * 1.));
+    float noise = snoise(vec3(base.x + uTime * 0.2, base.y, uTime * 0.2));
 
     // Ignore negative noise values
     noise = max(0., noise);
@@ -150,7 +163,7 @@ vec4 main( vec2 fragCoord ) {
         float noiseCeil = 0.4 + float(i) * 0.07;
 
         // Calculate noise
-        float noise = smoothstep(noiseFloor, noiseCeil, snoise(vec3(base.x * frequency.x + uTime * flow, base.y * frequency.y, uTime * speed + seed)));
+        float noise = smoothstep(noiseFloor, noiseCeil, snoise(vec3(base.x * frequency.x + uTime * $speed * flow, base.y * frequency.y, uTime * $speed * speed + seed)));
 
         // Mix the color with the base color based on our noise
         vColor = mix(vColor, uColor[i], noise);
@@ -160,4 +173,12 @@ vec4 main( vec2 fragCoord ) {
     return vec4(vColor, 1.0);
 }
     """
+
+    override fun applyUniforms(runtimeEffect: RuntimeEffect, time: Float, width: Float, height: Float) {
+        super.applyUniforms(runtimeEffect, time, width, height)
+
+        runtimeEffect.setFloatUniform(
+            "uColor", colorUniforms
+        )
+    }
 }

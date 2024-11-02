@@ -16,9 +16,6 @@ internal class FallbackAndroidRuntimeEffect : RuntimeEffect {
     override val supported: Boolean = false
     override var ready: Boolean = false
 
-    override fun updateUniforms(time: Float, width: Float, height: Float) {
-    }
-
     override fun build(): Brush {
         return Brush.horizontalGradient(listOf(Color.White, Color.White))
     }
@@ -32,15 +29,24 @@ internal class AndroidRuntimeEffect(shader: Shader) : RuntimeEffect {
     override val supported: Boolean = true
     override var ready: Boolean = false
 
-    override fun updateUniforms(time: Float, width: Float, height: Float) {
-        compositeRuntimeEffect.setFloatUniform("uResolution", width, height, width / height)
-        compositeRuntimeEffect.setFloatUniform("uTime", time)
+    override fun setFloatUniform(name: String, value1: Float) {
+        compositeRuntimeEffect.setFloatUniform(name, value1)
+    }
 
-        compositeRuntimeEffect.setFloatUniform("uColor", floatArrayOf(
-            0.078431375f, 0.61960787f, 0.9607843f,
-            0.43529412f, 0.8f, 0.99607843f,
-            0.8117647f, 0.8666667f, 0.96862745f)
-        )
+    override fun setFloatUniform(name: String, value1: Float, value2: Float) {
+        compositeRuntimeEffect.setFloatUniform(name, value1, value2)
+    }
+
+    override fun setFloatUniform(name: String, value1: Float, value2: Float, value3: Float) {
+        compositeRuntimeEffect.setFloatUniform(name, value1, value2, value3)
+    }
+
+    override fun setFloatUniform(name: String, values: FloatArray) {
+        compositeRuntimeEffect.setFloatUniform(name, values)
+    }
+
+    override fun update(shader: Shader, time: Float, width: Float, height: Float) {
+        shader.applyUniforms(this, time, width, height)
         ready = width > 0 && height > 0
     }
 
