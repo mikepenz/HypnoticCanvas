@@ -1,12 +1,7 @@
 package com.mikepenz.hypnoticcanvas
 
 import androidx.compose.animation.core.withInfiniteAnimationFrameMillis
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Size
@@ -32,16 +27,15 @@ fun Modifier.shaderBackground(
     speed: Float = 1f,
     fallback: () -> Brush = {
         Brush.horizontalGradient(listOf(Color.Transparent, Color.Transparent))
-    }
+    },
 ): Modifier {
     val runtimeEffect = remember(shader) { buildEffect(shader) }
     var size: Size by remember { mutableStateOf(Size(-1f, -1f)) }
+    val speedModifier = shader.speedModifier
 
-    if (runtimeEffect.supported) {
+    val time by if (runtimeEffect.supported) {
         var startMillis = remember(shader) { -1L }
-        val speedModifier = shader.speedModifier
-
-        val time by produceState(0f, speedModifier) {
+        produceState(0f, speedModifier) {
             while (true) {
                 withInfiniteAnimationFrameMillis {
                     if (startMillis < 0) startMillis = it
@@ -49,13 +43,14 @@ fun Modifier.shaderBackground(
                 }
             }
         }
-
-        runtimeEffect.updateUniforms((time * speed * speedModifier).round(3), size.width, size.height) // set uniforms for the shaders
+    } else {
+        mutableStateOf(-1f)
     }
 
     return this then Modifier.onGloballyPositioned {
         size = Size(it.size.width.toFloat(), it.size.height.toFloat())
     }.drawBehind {
+        runtimeEffect.updateUniforms((time * speed * speedModifier).round(3), size.width, size.height) // set uniforms for the shaders
         if (runtimeEffect.ready) {
             drawRect(brush = runtimeEffect.build())
         } else {
