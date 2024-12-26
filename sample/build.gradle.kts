@@ -108,8 +108,8 @@ android {
 
     defaultConfig {
         applicationId = "com.mikepenz.hypnoticcanvas"
-        versionCode = 20
-        versionName = "0.2.0"
+        versionCode = 30
+        versionName = "0.3.0"
         setProperty("archivesBaseName", "HypnoticCanvas-v$versionName")
     }
     packaging {
