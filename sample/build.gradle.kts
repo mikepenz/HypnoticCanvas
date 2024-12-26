@@ -69,7 +69,13 @@ kotlin {
 
             implementation(libs.bundles.coil) // image
             implementation(libs.bundles.aboutlibs) // aboutlibraries
-            implementation(libs.bundles.haze) // haze
+
+            implementation(libs.haze.core.get().toString()) {
+                exclude(group = "org.jetbrains.kotlin")
+            }
+            implementation(libs.haze.materials.get().toString()) {
+                exclude(group = "org.jetbrains.kotlin")
+            }
         }
 
         val desktopMain by getting {
@@ -165,17 +171,16 @@ private val appSigningFile: String?
         }.getProperty(k, null) ?: if (project.hasProperty(k)) project.property(k)?.toString() else null
     }
 
-
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
+    compilerOptions {
         if (project.findProperty("composeCompilerReports") == "true") {
-            freeCompilerArgs += listOf(
+            freeCompilerArgs.addAll(
                 "-P",
                 "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${project.layout.buildDirectory.asFile.get().absolutePath}/compose_compiler"
             )
         }
         if (project.findProperty("composeCompilerMetrics") == "true") {
-            freeCompilerArgs += listOf(
+            freeCompilerArgs.addAll(
                 "-P",
                 "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${project.layout.buildDirectory.asFile.get().absolutePath}/compose_compiler"
             )
