@@ -4,9 +4,9 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {
             apply("org.jetbrains.kotlin.multiplatform")
@@ -26,7 +26,6 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             iosArm64()
             iosSimulatorArm64()
 
-            @OptIn(ExperimentalWasmDsl::class)
             wasmJs {
                 browser()
             }
