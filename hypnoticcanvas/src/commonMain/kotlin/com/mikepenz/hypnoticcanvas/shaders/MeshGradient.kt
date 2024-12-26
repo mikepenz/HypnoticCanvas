@@ -6,10 +6,13 @@ import androidx.compose.ui.graphics.Color
 import com.mikepenz.hypnoticcanvas.RuntimeEffect
 
 class MeshGradient(
-    /** The colors to display */
+    /**
+     * The colors to display.
+     * The last provided color acts like a "background"
+     */
     colors: Array<Color>,
     /** Adjust the speed of the movement */
-    speed: Float = 0.005f,
+    speed: Float = 1f,
     /** Adjusts the scale of the board. Higher number -> larger billboard -> smaller color blobs */
     scale: Float = 2f,
 ) : Shader {
@@ -153,17 +156,17 @@ vec4 main( vec2 fragCoord ) {
     for(int i = 0; i < MAX_COLORS - 1; i++) {
         // Calculate some more noise values to use for the color
         float flow = 5. + float(i) * 0.3;
-        float speed = 6. + float(i) * 0.3;
+        float speed = 6. * $speed + float(i) * 0.3;
         float seed = 1. + float(i) * 4.;
 
-        vec2 frequency = vec2(0.3, 0.4);
+        vec2 frequency = vec2(0.3, 0.7);
 
         // Create min and max values for our noise (based on the current color index)
-        float noiseFloor = 0.2;
-        float noiseCeil = 0.4 + float(i) * 0.07;
+        float noiseFloor = 0.00001;
+        float noiseCeil = 0.6 + float(i) * 0.07;
 
         // Calculate noise
-        float noise = smoothstep(noiseFloor, noiseCeil, snoise(vec3(base.x * frequency.x + uTime * $speed * flow, base.y * frequency.y, uTime * $speed * speed + seed)));
+        float noise = smoothstep(noiseFloor, noiseCeil, snoise(vec3(base.x * frequency.x + uTime * 0.005 * flow, base.y * frequency.y, uTime * 0.005 * speed + seed)));
 
         // Mix the color with the base color based on our noise
         vColor = mix(vColor, uColor[i], noise);
