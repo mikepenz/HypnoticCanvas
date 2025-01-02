@@ -34,7 +34,7 @@ kotlin {
             dependsOn(commonMain.get())
         }
 
-        iosMain {
+        appleMain {
             dependsOn(nonAndroidMain)
         }
 
@@ -43,6 +43,9 @@ kotlin {
         }
 
         named("wasmJsMain") {
+            dependsOn(nonAndroidMain)
+        }
+        named("jsMain") {
             dependsOn(nonAndroidMain)
         }
     }
