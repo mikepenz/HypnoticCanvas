@@ -1,17 +1,14 @@
 plugins {
-    id("com.mikepenz.android.library")
-    id("com.mikepenz.kotlin.multiplatform")
-    id("com.mikepenz.compose")
+    id("com.mikepenz.convention.android-library")
+    id("com.mikepenz.convention.kotlin-multiplatform")
+    id("com.mikepenz.convention.compose")
+    id("com.mikepenz.convention.publishing")
     alias(libs.plugins.baselineprofile)
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.mavenpublish)
 }
 
 android {
     namespace = "com.mikepenz.hypnoticcanvas"
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
@@ -51,15 +48,6 @@ kotlin {
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-receivers")
-    }
-}
-
 baselineProfile {
     filter { include("com.mikepenz.hypnoticcanvas.*") }
-}
-
-dependencies {
 }

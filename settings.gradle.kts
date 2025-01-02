@@ -1,10 +1,9 @@
 pluginManagement {
-    includeBuild("gradle/build-logic")
-
     repositories {
         mavenCentral()
         google()
         gradlePluginPortal()
+        mavenLocal()
     }
 }
 
@@ -14,6 +13,12 @@ dependencyResolutionManagement {
         google()
         maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
         mavenLocal()
+    }
+
+    versionCatalogs {
+        create("baseLibs") {
+            from("com.mikepenz:version-catalog:0.0.1")
+        }
     }
 }
 
