@@ -6,6 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
@@ -19,11 +20,12 @@ import com.mikepenz.hypnoticcanvas.shaders.*
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import hypnoticcanvas_root.sample.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 fun App() {
     val uriHandler = LocalUriHandler.current
@@ -132,11 +134,7 @@ fun App() {
                         libraries = libs,
                         modifier = Modifier.fillMaxSize()
                             .let {
-                                if (useHaze) it.hazeChild(
-                                    state = hazeState,
-                                    shape = MaterialTheme.shapes.large,
-                                    style = HazeMaterials.thin(),
-                                ) else it
+                                if (useHaze) it.clip(MaterialTheme.shapes.large).hazeChild(hazeState, HazeMaterials.thin()) else it
                             },
                         colors = LibraryDefaults.libraryColors(backgroundColor = Color.Transparent),
                         contentPadding = contentPadding
@@ -153,11 +151,7 @@ fun App() {
                             .aspectRatio(16f / 9)
                             .align(Alignment.Center)
                             .let {
-                                if (useHaze) it.hazeChild(
-                                    state = hazeState,
-                                    shape = MaterialTheme.shapes.large,
-                                    style = HazeMaterials.thin(),
-                                ) else it
+                                if (useHaze) it.clip(MaterialTheme.shapes.large).hazeChild(hazeState, HazeMaterials.thin()) else it
                             }
                     ) {
                         Box(Modifier.fillMaxSize()) {

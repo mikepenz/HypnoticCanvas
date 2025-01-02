@@ -1,17 +1,15 @@
 plugins {
-    id("com.mikepenz.android.library")
-    id("com.mikepenz.kotlin.multiplatform")
-    id("com.mikepenz.compose")
+    id("com.mikepenz.convention.android-library")
+    id("com.mikepenz.convention.kotlin-multiplatform")
+    id("com.mikepenz.convention.compose")
+    id("com.mikepenz.convention.publishing")
+
     alias(libs.plugins.baselineprofile)
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.mavenpublish)
 }
 
 android {
     namespace = "com.mikepenz.hypnoticcanvas.shaders"
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
@@ -43,12 +41,6 @@ kotlin {
         named("wasmJsMain") {
             dependsOn(nonAndroidMain)
         }
-    }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        freeCompilerArgs += "-Xcontext-receivers"
     }
 }
 

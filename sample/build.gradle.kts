@@ -1,13 +1,12 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import java.util.Properties
 
 plugins {
-    id("com.mikepenz.android.application")
-    id("org.jetbrains.kotlin.multiplatform")
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.aboutlibraries)
+    id("com.mikepenz.convention.kotlin-multiplatform")
+    id("com.mikepenz.convention.android-application")
+    id("com.mikepenz.convention.compose")
+    alias(baseLibs.plugins.aboutlibraries)
 }
 
 if (appSigningFile != null) {
@@ -45,18 +44,10 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
     sourceSets {
-        all {
-            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
-        }
-
-        val nonAndroidMain by creating {
-            dependsOn(commonMain.get())
-        }
-
         androidMain.dependencies {
-            //implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
         }
+
         commonMain.dependencies {
             implementation(compose.runtime) { require(true) }
             implementation(compose.foundation) { require(true) }
@@ -67,8 +58,7 @@ kotlin {
             implementation(projects.hypnoticcanvas)
             implementation(projects.hypnoticcanvasShaders)
 
-            implementation(libs.bundles.coil) // image
-            implementation(libs.bundles.aboutlibs) // aboutlibraries
+            implementation(baseLibs.bundles.aboutlibs) // aboutlibraries
 
             implementation(libs.haze.core.get().toString()) {
                 exclude(group = "org.jetbrains.kotlin")
@@ -78,11 +68,16 @@ kotlin {
             }
         }
 
+        val nonAndroidMain by creating {
+            dependsOn(commonMain.get())
+        }
+
         val desktopMain by getting {
             dependsOn(nonAndroidMain)
-        }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
+
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
         }
 
         nativeMain {
@@ -91,10 +86,6 @@ kotlin {
 
         val wasmJsMain by getting {
             dependsOn(nonAndroidMain)
-        }
-
-        wasmJsMain.dependencies {
-            implementation(libs.ktor.js)
         }
     }
 }
@@ -108,25 +99,12 @@ android {
 
     defaultConfig {
         applicationId = "com.mikepenz.hypnoticcanvas"
-        versionCode = 30
-        versionName = "0.3.0"
         setProperty("archivesBaseName", "HypnoticCanvas-v$versionName")
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-
-            signingConfig = signingConfigs.findByName("release")
-
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
         }
     }
 }
@@ -152,10 +130,6 @@ compose.desktop {
     }
 }
 
-compose.experimental {
-    web.application {}
-}
-
 aboutLibraries {
     registerAndroidTasks = false
     duplicationMode = com.mikepenz.aboutlibraries.plugin.DuplicateMode.MERGE
@@ -170,20 +144,3 @@ private val appSigningFile: String?
             }
         }.getProperty(k, null) ?: if (project.hasProperty(k)) project.property(k)?.toString() else null
     }
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions {
-        if (project.findProperty("composeCompilerReports") == "true") {
-            freeCompilerArgs.addAll(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${project.layout.buildDirectory.asFile.get().absolutePath}/compose_compiler"
-            )
-        }
-        if (project.findProperty("composeCompilerMetrics") == "true") {
-            freeCompilerArgs.addAll(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${project.layout.buildDirectory.asFile.get().absolutePath}/compose_compiler"
-            )
-        }
-    }
-}
