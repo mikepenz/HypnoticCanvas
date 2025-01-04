@@ -3,6 +3,8 @@ plugins {
 
     alias(baseLibs.plugins.androidApplication) apply false
     alias(baseLibs.plugins.androidLibrary) apply false
+    alias(baseLibs.plugins.androidLint) apply false
+    alias(baseLibs.plugins.androidTest) apply false
     alias(baseLibs.plugins.kotlinMultiplatform) apply false
     alias(baseLibs.plugins.composeMultiplatform) apply false
     alias(baseLibs.plugins.composeCompiler) apply false
@@ -10,6 +12,4 @@ plugins {
     alias(baseLibs.plugins.dokka)
     alias(libs.plugins.baselineprofile) apply false
     alias(libs.plugins.cacheFixPlugin) apply false
-    alias(libs.plugins.android.lint) apply false
-    alias(libs.plugins.android.test) apply false
 }

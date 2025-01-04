@@ -6,7 +6,7 @@ plugins {
     id("com.mikepenz.convention.kotlin-multiplatform")
     id("com.mikepenz.convention.android-application")
     id("com.mikepenz.convention.compose")
-    alias(baseLibs.plugins.aboutlibraries)
+    alias(baseLibs.plugins.aboutLibraries)
 }
 
 if (appSigningFile != null) {
