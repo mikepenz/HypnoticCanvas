@@ -1,15 +1,10 @@
 [versions]
-conventionPlugin = "0.0.4"
-agp = "8.7.3"
+conventionPlugin = "0.1.0"
 androidx-benchmark = "1.3.3"
-compose-plugin = "1.7.3"
-kotlin = "2.1.0"
 haze = "1.1.1"
 
 [plugins]
 conventionPlugin = { id = "com.mikepenz.convention.root", version.ref = "conventionPlugin" }
-android-lint = { id = "com.android.lint", version.ref = "agp" }
-android-test = { id = "com.android.test", version.ref = "agp" }
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-benchmark" }
 cacheFixPlugin = { id = "org.gradle.android.cache-fix", version = "3.0.1" }
 
@@ -20,11 +15,6 @@ androidx-activity-compose = "androidx.activity:activity-compose:1.9.3"
 
 haze-core = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
-
-# Build logic dependencies
-android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-plugin" }
 
 [bundles]
 haze = ["haze-core", "haze-materials"]
