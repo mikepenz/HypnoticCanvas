@@ -1,4 +1,3 @@
-import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
@@ -7,11 +6,6 @@ plugins {
     id("com.mikepenz.convention.android-application")
     id("com.mikepenz.convention.compose")
     alias(baseLibs.plugins.aboutLibraries)
-}
-
-val appSigningFile: String? = readPropertyOrElse("signing.file")
-if (appSigningFile != null) {
-    apply(from = appSigningFile)
 }
 
 kotlin {
@@ -101,15 +95,6 @@ android {
     defaultConfig {
         applicationId = "com.mikepenz.hypnoticcanvas"
         setProperty("archivesBaseName", "HypnoticCanvas-v$versionName")
-    }
-
-    buildTypes {
-        getByName("debug") {
-            signingConfig = signingConfigs.findByName("debug")
-        }
-        getByName("release") {
-            signingConfig = signingConfigs.findByName("release")
-        }
     }
 
     packaging {
