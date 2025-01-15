@@ -41,6 +41,7 @@ fun App() {
         GlossyGradients,
         Heat(),
         Stripy(2.0f),
+        BubbleRings,
         GradientFlow,
         PurpleLiquid,
         InkFlow,
