@@ -39,6 +39,8 @@ fun App() {
         ),
         MesmerizingLens,
         GlossyGradients,
+        Heat(),
+        Stripy(2.0f),
         GradientFlow,
         PurpleLiquid,
         InkFlow,
