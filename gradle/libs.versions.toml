@@ -1,5 +1,5 @@
 [versions]
-conventionPlugin = "0.1.3"
+conventionPlugin = "0.1.4"
 androidx-benchmark = "1.3.3"
 haze = "1.1.1"
 
