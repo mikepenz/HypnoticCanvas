@@ -62,7 +62,7 @@ supports different platforms:
 
 | Platform      | Supported | Link                                                 |
 |---------------|-----------|------------------------------------------------------|
-| Android       | ✅         |                                                      |
+| Android       | ✅  (A13+) |                                                      |
 | Desktop (JVM) | ✅         |                                                      |
 | iOS           | ✅         |                                                      |
 | Wasm          | ✅         | [Sample](https://mikepenz.github.io/HypnoticCanvas/) |
