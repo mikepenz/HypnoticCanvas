@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.conventionPlugin)
+    alias(baseLibs.plugins.conventionPlugin)
 
     alias(baseLibs.plugins.androidApplication) apply false
     alias(baseLibs.plugins.androidLibrary) apply false
@@ -9,6 +9,8 @@ plugins {
     alias(baseLibs.plugins.composeMultiplatform) apply false
     alias(baseLibs.plugins.composeCompiler) apply false
     alias(baseLibs.plugins.mavenPublish) apply false
+    alias(baseLibs.plugins.versionCatalogUpdate) apply false
+    alias(baseLibs.plugins.aboutLibraries) apply false
     alias(baseLibs.plugins.dokka)
     alias(libs.plugins.baselineprofile) apply false
     alias(libs.plugins.cacheFixPlugin) apply false
