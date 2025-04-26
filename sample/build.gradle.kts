@@ -49,6 +49,7 @@ kotlin {
             implementation(compose.material3) { require(true) }
             implementation(compose.ui) { require(true) }
             implementation(compose.components.resources) { require(true) }
+            implementation(compose.materialIconsExtended)
 
             implementation(projects.hypnoticcanvas)
             implementation(projects.hypnoticcanvasShaders)
