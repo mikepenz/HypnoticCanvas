@@ -142,7 +142,6 @@ fun App() {
                             .let {
                                 if (useHaze) it.clip(MaterialTheme.shapes.large).hazeEffect(hazeState, HazeMaterials.thin()) else it
                             },
-                        colors = LibraryDefaults.libraryColors(backgroundColor = Color.Transparent),
                         contentPadding = contentPadding
                     )
                 } else {
