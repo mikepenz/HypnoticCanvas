@@ -2,6 +2,7 @@ package com.mikepenz.hypnoticcanvas
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.asComposeShader
 import com.mikepenz.hypnoticcanvas.shaders.Shader
 import org.jetbrains.skia.RuntimeShaderBuilder
 
@@ -35,7 +36,7 @@ class NonAndroidRuntimeEffect(shader: Shader) : RuntimeEffect {
     }
 
     override fun build(): Brush {
-        return ShaderBrush(compositeShaderBuilder.makeShader())
+        return ShaderBrush(compositeShaderBuilder.makeShader().asComposeShader())
     }
 }
 
