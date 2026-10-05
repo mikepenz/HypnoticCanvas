@@ -12,23 +12,19 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
-import com.mikepenz.aboutlibraries.ui.compose.m3.libraryColors
 import com.mikepenz.hypnoticcanvas.Github
 import com.mikepenz.hypnoticcanvas.shaderBackground
 import com.mikepenz.hypnoticcanvas.shaders.*
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
-import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.HazeInput
+import dev.chrisbanes.haze.blur.hazeBlur
 import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
+import dev.chrisbanes.haze.blur.materials.HazeMaterials
 import hypnoticcanvas_root.sample.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class, ExperimentalHazeMaterialsApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun App() {
     val uriHandler = LocalUriHandler.current
@@ -68,7 +64,7 @@ fun App() {
                     },
                     modifier = Modifier
                         .let {
-                            if (useHaze) it.hazeEffect(hazeState, style = HazeMaterials.thin()) else it
+                            if (useHaze) it.hazeBlur(HazeInput.Sources(hazeState), style = HazeMaterials.thin()) else it
                         }
                         .fillMaxWidth(),
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -103,7 +99,7 @@ fun App() {
                         containerColor = Color.Transparent,
                         modifier = Modifier
                             .let {
-                                if (useHaze) it.hazeEffect(hazeState, style = HazeMaterials.thin()) else it
+                                if (useHaze) it.hazeBlur(HazeInput.Sources(hazeState), style = HazeMaterials.thin()) else it
                             }
                             .fillMaxWidth(),
                     ) {
@@ -140,7 +136,7 @@ fun App() {
                         libraries = libs,
                         modifier = Modifier.fillMaxSize()
                             .let {
-                                if (useHaze) it.clip(MaterialTheme.shapes.large).hazeEffect(hazeState, HazeMaterials.thin()) else it
+                                if (useHaze) it.clip(MaterialTheme.shapes.large).hazeBlur(HazeInput.Sources(hazeState), HazeMaterials.thin()) else it
                             },
                         contentPadding = contentPadding
                     )
@@ -156,7 +152,7 @@ fun App() {
                             .aspectRatio(16f / 9)
                             .align(Alignment.Center)
                             .let {
-                                if (useHaze) it.clip(MaterialTheme.shapes.large).hazeEffect(hazeState, HazeMaterials.thin()) else it
+                                if (useHaze) it.clip(MaterialTheme.shapes.large).hazeBlur(HazeInput.Sources(hazeState), HazeMaterials.thin()) else it
                             }
                     ) {
                         Box(Modifier.fillMaxSize()) {

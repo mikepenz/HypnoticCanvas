@@ -56,6 +56,10 @@ Box(
 
 ## Compatiblity
 
+This checkout uses Kotlin 2.4.10 and Compose Multiplatform 1.12.0. Android requires
+API 23 or newer, with shaders available on API 33 or newer and the fallback brush
+used below API 33. iOS requires version 14 or newer. Building requires JDK 21.
+
 HypnoticCanvas is built
 with [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/), meaning that it
 supports different platforms:
@@ -68,6 +72,12 @@ supports different platforms:
 | Wasm          | ✅         | [Sample](https://mikepenz.github.io/HypnoticCanvas/) |
 
 ## Build & Run Sample App
+
+### Build Android App
+
+```bash
+./gradlew sample-android:assembleDebug
+```
 
 ### Run Desktop App
 
@@ -84,7 +94,7 @@ supports different platforms:
 ### Update aboutLibraries.json
 
 ```bash
- ./gradlew sample:exportLibraryDefinitions -PaboutLibraries.exportPath=src/commonMain/composeResources/files/
+ ./gradlew sample:exportLibraryDefinitions
  ```
 
 ## Credit

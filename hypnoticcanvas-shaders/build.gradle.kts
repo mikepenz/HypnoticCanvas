@@ -1,49 +1,21 @@
 plugins {
-    id("com.mikepenz.convention.android-library")
     id("com.mikepenz.convention.kotlin-multiplatform")
     id("com.mikepenz.convention.compose")
     id("com.mikepenz.convention.publishing")
-
-    alias(libs.plugins.baselineprofile)
-}
-
-android {
-    namespace = "com.mikepenz.hypnoticcanvas.shaders"
-
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-    }
 }
 
 kotlin {
+    android {
+        namespace = "com.mikepenz.hypnoticcanvas.shaders"
+    }
+
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(projects.hypnoticcanvas)
-            }
+        commonMain.dependencies {
+            api(projects.hypnoticcanvas)
         }
-
-        androidMain {
-        }
-
-        val nonAndroidMain by creating {
-            dependsOn(commonMain.get())
-        }
-
-        iosMain {
-            dependsOn(nonAndroidMain)
-        }
-
-        jvmMain {
-            dependsOn(nonAndroidMain)
-        }
-
-        named("wasmJsMain") {
-            dependsOn(nonAndroidMain)
+        jvmTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(compose.desktop.currentOs)
         }
     }
-}
-
-baselineProfile {
-    filter { include("com.mikepenz.hypnoticcanvas.*") }
 }
