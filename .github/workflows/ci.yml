@@ -7,9 +7,13 @@ on:
       - '*'
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   publish_archives:
     name: Publish Archives
+    needs: build
     if: startsWith(github.ref, 'refs/tags/')
 
     strategy:
@@ -20,9 +24,11 @@ jobs:
 
     steps:
       - name: Checkout the repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-java@v6
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
         with:
           distribution: 'zulu'
           java-version: |
@@ -32,10 +38,10 @@ jobs:
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6.4.0
+        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
 
       - name: Cache konan
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.konan
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
@@ -54,53 +60,33 @@ jobs:
           ./gradlew hypnoticcanvas:publishAllPublicationsToMavenCentralRepository -x test -x lint --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
           ./gradlew hypnoticcanvas-shaders:publishAllPublicationsToMavenCentralRepository -x test -x lint --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
 
-      - name: Publish the windows artifact
-        if: matrix.os == 'windows-latest'
-        env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
-        run: |
-          ./gradlew hypnoticcanvas:publishMingwX64PublicationToMavenCentralRepository --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
-          ./gradlew hypnoticcanvas-shaders:publishMingwX64PublicationToMavenCentralRepository -x test -x lint --no-configure-on-demand --no-parallel --no-configuration-cache
-
-      - name: Publish the linux artifact
-        if: matrix.os == 'ubuntu-latest'
-        env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
-        run: |
-          ./gradlew hypnoticcanvas:publishLinuxX64PublicationToMavenCentralRepository --no-daemon --no-configure-on-demand --no-parallel --no-configuration-cache
-          ./gradlew hypnoticcanvas-shaders:publishLinuxX64PublicationToMavenCentralRepository -x test -x lint --no-configure-on-demand --no-parallel --no-configuration-cache
-
   build:
     name: Build
+    permissions:
+      contents: read
+      security-events: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           fetch-depth: 100
 
-      - uses: actions/setup-java@v6
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
         with:
           distribution: 'zulu'
           java-version: |
             21
 
       - name: Validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v6.4.0
+        uses: gradle/actions/wrapper-validation@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
 
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6.4.0
+        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
 
       - name: Build Debug
         run: ./gradlew sample-android:assembleDebug
@@ -112,34 +98,64 @@ jobs:
         if: github.event_name  == 'pull_request'
         run: ./gradlew sample-android:lintDebug
 
-      - name: Prepare Keystore and Local.
-        if: false && startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "${{ secrets.KEYSTORE }}" > opensource.jks.asc
-          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch "opensource.jks.asc" > "app/opensource.jks"
-
-      - name: Build Release App
-        if: false && startsWith(github.ref, 'refs/tags/')
-        run: ./gradlew sample-android:assembleRelease sample-android:bundleRelease -P"com.mikepenz.android.signing.enabled"="true" -P"com.mikepenz.android.signing.storeFile"="app/opensource.jks" -P"com.mikepenz.android.signing.storePassword"="${{ secrets.STORE_PASSWORD }}" -P"com.mikepenz.android.signing.keyAlias"="${{ secrets.KEY_ALIAS }}" -P"com.mikepenz.android.signing.keyPassword"="${{ secrets.KEY_PASSWORD }}"
-
-      - name: Collect artifacts
-        if: false
-        run: |
-          COLLECT_PWD=${PWD}
-          mkdir -p "artifacts"
-          find . -name "*-release.apk" -type f -exec cp {} "artifacts" \;
-          find . -name "*-release.aab" -type f -exec cp {} "artifacts" \;
-
-      - name: Archive Artifacts
-        uses: actions/upload-artifact@v7
-        if: false
+      - name: Upload lint SARIF
+        if: always() && github.event_name == 'pull_request' && hashFiles('sample-android/build/reports/lint-results-debug.sarif') != ''
+        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
         with:
-          name: "App-Artifacts"
-          path: artifacts/*
+          sarif_file: sample-android/build/reports/lint-results-debug.sarif
+          category: android-lint
+
+      - name: Verify README shader renders
+        run: ./gradlew hypnoticcanvas-shaders:verifyReadmeArt
+
+      - name: Build release jars
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          ./gradlew hypnoticcanvas:jvmJar hypnoticcanvas-shaders:jvmJar
+          mkdir -p artifacts
+          cp hypnoticcanvas/build/libs/*-jvm.jar hypnoticcanvas-shaders/build/libs/*-jvm.jar artifacts/
+
+      - name: Archive release artifacts
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Library-Artifacts
+          path: artifacts/*.jar
+          if-no-files-found: error
+
+  release:
+    name: Release
+    needs: [build, publish_archives]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 100
+          persist-credentials: false
+      - name: Download artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: Library-Artifacts
+          path: artifacts
+      - name: Attest build provenance
+        id: attest
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: artifacts/*
+      - name: Attach provenance to release assets
+        env:
+          BUNDLE_PATH: ${{ steps.attest.outputs.bundle-path }}
+        run: cp "$BUNDLE_PATH" "artifacts/HypnoticCanvas-${GITHUB_REF_NAME}.intoto.jsonl"
 
       - name: Build Changelog
         id: github_release
-        uses: mikepenz/release-changelog-builder-action@v6
+        uses: mikepenz/release-changelog-builder-action@c9bcd8238b6f41e05561348339429d360b1c0247 # v6.2.3
         if: startsWith(github.ref, 'refs/tags/')
         with:
           configuration: ".github/config/configuration.json"
@@ -148,7 +164,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
-        uses: mikepenz/action-gh-release@v3
+        uses: mikepenz/action-gh-release@7a1a2d94070db8d22681770f42cdb85a9c38d6ac # v3.1.0
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body: ${{steps.github_release.outputs.changelog}}

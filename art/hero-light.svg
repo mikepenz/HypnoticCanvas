@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+<title id="title">HypnoticCanvas</title>
+<desc id="desc">Shader programs and uniforms become animated Compose backgrounds through Modifier.shaderBackground.</desc>
+<rect width="1200" height="360" rx="24" fill="#faf7ff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+<text x="60" y="66" fill="#61566d" font-size="22">COMPOSE MULTIPLATFORM · SHADER BACKGROUNDS</text>
+<text x="60" y="145" fill="#21172d" font-size="72" font-weight="700">HypnoticCanvas</text>
+<text x="60" y="196" fill="#61566d" font-size="30">Animated shaders. One Compose modifier.</text>
+<g font-size="24" fill="#21172d">
+<rect x="60" y="248" width="240" height="64" rx="12" fill="#6903f9"/><text x="90" y="289" fill="white">Shader + uniforms</text>
+<path d="M315 280H365M355 270L365 280 355 290" fill="none" stroke="#61566d" stroke-width="3"/>
+<text x="390" y="289" font-family="ui-monospace, Menlo, monospace">shaderBackground()</text>
+<path d="M700 280H750M740 270L750 280 740 290" fill="none" stroke="#61566d" stroke-width="3"/>
+<text x="775" y="289">Compose UI</text>
+</g></g></svg>

@@ -1,14 +1,119 @@
-[![Maven Central](https://img.shields.io/maven-central/v/com.mikepenz.hypnoticcanvas/hypnoticcanvas)](https://search.maven.org/search?q=g:com.mikepenz.hypnoticcanvas)
+<h1 align="center">HypnoticCanvas</h1>
 
-# HypnoticCanvas
+<p align="center">Animated shader backgrounds for Compose Multiplatform.</p>
 
-> [!NOTE]  
-> This README is under construction.
+<p align="center">
+  <a href="https://github.com/mikepenz/HypnoticCanvas/actions/workflows/ci.yml"><img src="https://github.com/mikepenz/HypnoticCanvas/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <a href="https://central.sonatype.com/artifact/com.mikepenz.hypnoticcanvas/hypnoticcanvas"><img src="https://img.shields.io/maven-central/v/com.mikepenz.hypnoticcanvas/hypnoticcanvas?style=flat-square" alt="Maven Central version"></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/mikepenz/HypnoticCanvas"><img src="https://img.shields.io/ossf-scorecard/github.com/mikepenz/HypnoticCanvas?style=flat-square&amp;label=scorecard" alt="OpenSSF Scorecard"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/core-Apache%202.0%20%2F%20MIT-blue?style=flat-square" alt="Core code Apache 2.0, core shaders MIT"></a>
+</p>
 
-HypnoticCanvas is a library providing a convenient `Modifier` offering mesmerising shaders as
-background in your Compose based UI.
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="art/hero-dark.svg">
+    <img src="art/hero-light.svg" width="100%" alt="Shader programs and uniforms become animated Compose backgrounds through Modifier.shaderBackground.">
+  </picture>
+</p>
+
+<p align="center">
+  <a href="#quickstart">Quickstart</a> &bull;
+  <a href="#showcase">Showcase</a> &bull;
+  <a href="#reference">Reference</a> &bull;
+  <a href="https://mikepenz.github.io/HypnoticCanvas/">Live demo</a> &bull;
+  <a href="SECURITY.md">Security</a>
+</p>
+
+| Capability | What you get |
+| --- | --- |
+| Compose modifier | Apply a shader behind your existing UI with `Modifier.shaderBackground`. |
+| Configurable animation | Set animation `speed`; configure `MeshGradient` colors and scale. |
+| Android fallback | Supply a `Brush` on Android below API 33. The default fallback is transparent. |
+| Multiplatform | Android, Desktop JVM, iOS, and Wasm sample apps. |
+| Separate shader modules | Three MIT core shaders; additional shaders have separate license terms. |
+
+## Quickstart
+
+1. Add the core dependency to `commonMain`. Use the version shown by the Maven Central badge:
+
+```kotlin
+commonMain.dependencies {
+    implementation("com.mikepenz.hypnoticcanvas:hypnoticcanvas:<version>")
+}
+```
+
+2. Apply a shader inside a composable:
+
+```kotlin
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.mikepenz.hypnoticcanvas.shaderBackground
+import com.mikepenz.hypnoticcanvas.shaders.GlossyGradients
+
+Box(Modifier.fillMaxSize().shaderBackground(GlossyGradients))
+```
+
+3. Set the animation speed and a fallback for older Android devices:
+
+```kotlin
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+
+Box(
+    Modifier.fillMaxSize().shaderBackground(
+        shader = GlossyGradients,
+        speed = 0.5f,
+        fallback = { Brush.horizontalGradient(listOf(Color.Magenta, Color.Blue)) },
+    )
+)
+```
+
+> [!IMPORTANT]
+> The optional `hypnoticcanvas-shaders` module includes noncommercial shaders.
+> Read the [shader credits](#shaders-shaders-module) and [license terms](#shaders-module-license) before using it.
+
+## Showcase
+
+These are fixed-time renders of the actual core shaders using the same Skia runtime
+and Compose brush wrapper as the Desktop sample. They show shader output, without sample UI overlays.
+The `MeshGradient` panel uses the sample app's colors and `scale = 1f`.
+Source: [ReadmeArtTest.kt](hypnoticcanvas-shaders/src/jvmTest/kotlin/com/mikepenz/hypnoticcanvas/shaders/ReadmeArtTest.kt).
+
+<p align="center">
+  <img src="art/showcase-mesh-gradient.png" width="260" alt="MeshGradient with pink and purple colors from the sample app">
+  <img src="art/showcase-mesmerizing-lens.png" width="260" alt="MesmerizingLens core shader at a fixed animation time">
+  <img src="art/showcase-glossy-gradients.png" width="260" alt="GlossyGradients core shader at a fixed animation time">
+</p>
+
+<p align="center"><sub>MeshGradient &bull; MesmerizingLens &bull; GlossyGradients. All three core shaders are MIT licensed.</sub></p>
+
+[Try the animated sample](https://mikepenz.github.io/HypnoticCanvas/).
+
+Refresh images deliberately, then verify them:
+
+```bash
+./gradlew :hypnoticcanvas-shaders:recordReadmeArt -PrecordReadmeArt=true --rerun-tasks
+./gradlew :hypnoticcanvas-shaders:verifyReadmeArt
+```
+
+The original recorded demo is also available:
 
 https://github.com/mikepenz/HypnoticCanvas/assets/1476232/ee120f1c-d18a-43c4-a7bc-a2d245e01482
+
+---
+
+# Reference
+
+| Topic | Link |
+| --- | --- |
+| Dependencies | [Setup](#setup) |
+| Shader configuration | [Usage](#usage) |
+| Platform requirements | [Compatibility](#compatibility) |
+| Sample commands | [Build and run](#build--run-sample-app) |
+| Authors and shader licenses | [Credit](#credit) |
+| License terms | [License](#license) |
+| Vulnerability reporting | [Security policy](SECURITY.md) |
 
 ## Setup
 
@@ -54,7 +159,7 @@ Box(
 )
 ```
 
-## Compatiblity
+## Compatibility
 
 This checkout uses Kotlin 2.4.10 and Compose Multiplatform 1.12.0. Android requires
 API 23 or newer, with shaders available on API 33 or newer and the fallback brush
@@ -88,7 +193,7 @@ supports different platforms:
 ### Run Web App
 
 ```bash
-./gradlew sample:wasmJsRun
+./gradlew sample:wasmJsBrowserDevelopmentRun
 ```
 
 ### Update aboutLibraries.json
@@ -143,7 +248,7 @@ The source code for the core module is licensed under Apache 2.0, with the shade
 core module as MIT License.
 
 ```
-Copyright 2025 Mike Penz
+Copyright 2024-2026 Mike Penz
  
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
