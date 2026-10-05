@@ -1,5 +1,7 @@
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -31,7 +33,9 @@ fun App() {
     var showLicenses by remember { mutableStateOf(false) }
     var useHaze by remember { mutableStateOf(true) }
     val hazeState = remember { HazeState() }
-    val options = listOf(
+    val options = remember { listOf(
+        SpectralAurora(),
+        PrismGlass(),
         MeshGradient(
             arrayOf(Color(0xFFFF15E5), Color(0xFFFAAEF7), Color(0xFF6903F9)),
             scale = 1f
@@ -49,7 +53,7 @@ fun App() {
         Stage,
         GoldenMagma,
         BlackCherryCosmos
-    )
+    ) }
     var selectedShader: Shader by remember { mutableStateOf(options.first()) }
     val animatedToolbarColor by animateColorAsState(
         if (showLicenses) Color.Unspecified else Color.Transparent
@@ -101,10 +105,12 @@ fun App() {
                             .let {
                                 if (useHaze) it.hazeBlur(HazeInput.Sources(hazeState), style = HazeMaterials.thin()) else it
                             }
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState()),
                     ) {
                         options.forEachIndexed { index, shader ->
                             NavigationBarItem(
+                                modifier = Modifier.width(64.dp),
                                 selected = selectedShader == shader,
                                 onClick = { selectedShader = shader },
                                 icon = {
@@ -164,15 +170,17 @@ fun App() {
                                     overflow = TextOverflow.Ellipsis
                                 )
 
-                                Text(
-                                    "by ${selectedShader.authorName}",
-                                    modifier = Modifier.clickable {
-                                        uriHandler.openUri(selectedShader.authorUrl)
-                                    },
-                                    style = MaterialTheme.typography.titleMedium,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                                )
+                                if (selectedShader.authorName.isNotBlank()) {
+                                    Text(
+                                        "by ${selectedShader.authorName}",
+                                        modifier = Modifier.clickable {
+                                            uriHandler.openUri(selectedShader.authorUrl)
+                                        },
+                                        style = MaterialTheme.typography.titleMedium,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
                                 Text(
                                     selectedShader.credit,
                                     modifier = Modifier.clickable {

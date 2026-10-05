@@ -16,7 +16,7 @@ import org.jetbrains.skia.Image
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-/** Fixed-time renders of the same core shaders and colors used by the sample app. */
+/** Fixed-time renders of the core and texture shaders used by the sample app. */
 class ReadmeArtTest {
     @Test
     fun renderCoreShaders() {
@@ -28,6 +28,8 @@ class ReadmeArtTest {
             ),
             "mesmerizing-lens" to MesmerizingLens,
             "glossy-gradients" to GlossyGradients,
+            "prism-glass" to PrismGlass(),
+            "spectral-aurora" to SpectralAurora(),
         )
         for ((name, shader) in shaders) {
             val bitmap = ImageBitmap(800, 500)

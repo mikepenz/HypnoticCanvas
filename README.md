@@ -88,6 +88,31 @@ Source: [ReadmeArtTest.kt](hypnoticcanvas-shaders/src/jvmTest/kotlin/com/mikepen
 
 <p align="center"><sub>MeshGradient &bull; MesmerizingLens &bull; GlossyGradients. All three core shaders are MIT licensed.</sub></p>
 
+### Texture shaders
+
+<p align="center">
+  <img src="art/showcase-prism-glass.png" width="400" alt="Prism Glass refracting a cyan, violet, and peach image through a luminous rounded glass panel">
+  <img src="art/showcase-spectral-aurora.png" width="400" alt="Spectral Aurora with violet and teal waveform ribbons over a dark background">
+</p>
+
+`PrismGlass` refracts an `ImageBitmap` with a chromatic edge and a moving glass
+panel. `SpectralAurora` uses raw waveform and spectrum textures to shape and light
+its ribbons, with a Compose gradient bound as a nested shader for the palette.
+Both are MIT licensed and live in `hypnoticcanvas-shaders`. Their constructors
+provide generated demo inputs; replace them with your own image or packed RGB
+audio data. The sample starts with Spectral Aurora, followed by Prism Glass.
+
+```kotlin
+Modifier.shaderBackground(PrismGlass()) // Or PrismGlass(imageBitmap)
+Modifier.shaderBackground(SpectralAurora()) // Generated waveform and spectrum
+Modifier.shaderBackground(SpectralAurora(waveformRgb, spectrumRgb))
+```
+
+For `SpectralAurora`, each RGB triplet's red byte contains a sample. Encode signed
+waveform values into 0–255, and normalize spectrum magnitudes into the same range.
+The arrays must be nonempty and divisible by three. Changed array contents are
+uploaded on the next draw. See [Texture inputs](#texture-inputs) for the encoding.
+
 [Try the animated sample](https://mikepenz.github.io/HypnoticCanvas/).
 
 Refresh images deliberately, then verify them:
@@ -109,6 +134,7 @@ https://github.com/mikepenz/HypnoticCanvas/assets/1476232/ee120f1c-d18a-43c4-a7b
 | --- | --- |
 | Dependencies | [Setup](#setup) |
 | Shader configuration | [Usage](#usage) |
+| Images and audio data | [Texture inputs](#texture-inputs) |
 | Platform requirements | [Compatibility](#compatibility) |
 | Sample commands | [Build and run](#build--run-sample-app) |
 | Authors and shader licenses | [Credit](#credit) |
@@ -158,6 +184,68 @@ Box(
         )
 )
 ```
+
+## Texture inputs
+
+Bind inputs from your shader's `applyUniforms` implementation. Use
+`setShaderUniform(name, shader)` for a Compose graphics shader, or
+`setTextureUniform(name, imageBitmap)` for an image. Image inputs use normal
+color-space and alpha handling and default to clamp addressing. Optional
+`tileModeX` and `tileModeY` arguments control tiling.
+
+For waveform or FFT data, `setDataTextureUniform(name, width, height, rgb)` uploads
+a snapshot of packed RGB bytes, in row order. Each unsigned channel is sampled as
+`value / 255`, with alpha fixed at 1, nearest filtering, and clamp addressing.
+There is no color conversion. The array must contain exactly `width * height * 3`
+bytes, and both dimensions must be positive. Rebind to upload changed samples.
+
+```kotlin
+import com.mikepenz.hypnoticcanvas.RuntimeEffect
+import com.mikepenz.hypnoticcanvas.shaders.GlossyGradients
+import com.mikepenz.hypnoticcanvas.shaders.Shader
+
+class AudioTextureShader(
+    private val waveformRgb: ByteArray,
+    private val fftRgb: ByteArray,
+) : Shader by GlossyGradients {
+    override val name = "Audio textures"
+    override val sksl = """
+        uniform float3 uResolution;
+        uniform shader waveform;
+        uniform shader fft;
+        uniform float2 sampleCounts;
+        half4 main(float2 p) {
+            float x = p.x / uResolution.x;
+            float wave = waveform.eval(float2(x * sampleCounts.x, 0.5)).r;
+            float magnitude = fft.eval(float2(x * sampleCounts.y, 0.5)).r;
+            float line = 1.0 - step(0.02, abs(p.y / uResolution.y - wave));
+            return half4(line, magnitude, 0.0, 1.0);
+        }
+    """.trimIndent()
+
+    override fun applyUniforms(effect: RuntimeEffect, time: Float, width: Float, height: Float) {
+        effect.setFloatUniform("uResolution", width, height, width / height)
+        effect.setFloatUniform("sampleCounts", waveformRgb.size / 3f, fftRgb.size / 3f)
+        effect.setDataTextureUniform("waveform", waveformRgb.size / 3, 1, waveformRgb)
+        effect.setDataTextureUniform("fft", fftRgb.size / 3, 1, fftRgb)
+    }
+}
+```
+
+Store samples in the red byte of each RGB triplet; unused green and blue bytes
+can be zero. Encode signed waveform values in −1…1 as
+`((sample.coerceIn(-1f, 1f) + 1f) * 127.5f).roundToInt().toByte()`.
+Decode with `sample.r * 2.0 - 1.0` if the shader needs the signed value. Kotlin
+bytes above 127 appear negative; their bits still represent unsigned samples.
+FFT magnitudes need normalization into 0…1 before encoding into 0…255.
+
+SkSL/AGSL uses `uniform shader` and `.eval()` instead of GLSL `sampler2D` and
+`texture()`. Coordinates are in texture pixels, with texel centers at `x + 0.5`
+and `y + 0.5`. All inputs must be bound before rendering. Input names must match
+the shader declarations; Android rejects unknown names, while Skiko ignores them.
+Android below API 33 keeps using the fallback brush.
+Raw uploads allocate a new texture on each call; this example uploads on every
+frame. Audio capture and FFT calculation remain the caller's responsibility.
 
 ## Compatibility
 
@@ -222,6 +310,8 @@ The individual shaders are based on the respective shaders licenses. More detail
 
 | Name                                                                                                                                                                                      | Author                                              | License              | Note                                                                                              |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|----------------------|---------------------------------------------------------------------------------------------------|
+| Prism Glass | | MIT License | Original image-input shader. |
+| Spectral Aurora | | MIT License | Original waveform, spectrum, and palette-input shader. |
 | [BlackCherryCosmos2](https://editor.isf.video/shaders/612cb473f4fe08001a0a6281) [via](https://glslsandbox.com/e#28545.0) [via](https://editor.isf.video/shaders/5e7a7fcf7c113618206de4cc) | [axiomcrux](https://editor.isf.video/u/axiomcrux)   | CC BY-NC-SA 3.0 DEED | Shader does not specifically include license, however found the shader it appears to be based on. |
 | [GoldenMagma](https://www.shadertoy.com/view/tdBBRV)                                                                                                                                      | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |                                                                                                   |
 | [IceReflection](https://www.shadertoy.com/view/3djfzy)                                                                                                                                    | [TAKUSAKU](https://www.shadertoy.com/user/TAKUSAKU) | CC BY-NC-SA 3.0 DEED |                                                                                                   |
@@ -239,8 +329,9 @@ The core project code in this repository is licensed as under Apache
 All Shaders are provided under their respective Authors license.
 
 Shaders in the `hypnoticcanvas` module are licensed either as `MIT, or Apache 2.0`.
-Shaders in the `hypnoticcanvas-shaders` module are licensed
-as `SPDX-License-Identifier: CC-BY-NC-SA-3.0`.
+Prism Glass and Spectral Aurora in `hypnoticcanvas-shaders` are MIT licensed.
+The other shaders in that module retain their individual licenses, including
+`SPDX-License-Identifier: CC-BY-NC-SA-3.0`; see the credits above.
 
 ### Core module License
 
@@ -264,6 +355,10 @@ limitations under the License.
 ```
 
 ### Shaders module License
+
+Prism Glass and Spectral Aurora are original shaders covered by the scoped
+[MIT notice](hypnoticcanvas-shaders/LICENSE-MIT). The same
+artifact also includes the shaders below with their existing license terms.
 
 Shaders in this module are most from [ShaderToy.com](https://www.shadertoy.com/) and are
 licensed [Attribution-NonCommercial-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-nc-sa/3.0/).
